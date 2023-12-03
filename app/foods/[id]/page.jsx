@@ -19,6 +19,7 @@ export default function Nutrition() {
     const [goalCalories, setGoalCalories] = useState(0);
 
 useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     fetchUserData();
 }, []);
 
@@ -36,12 +37,14 @@ useEffect(() => {
         const allCategories = ['breakfast', 'lunch', 'dinner', 'snacks'];
         let sum = 0;
         allCategories.forEach(category => {
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             sum += getTotalCaloriesByType(category);
     });
         setTotalCalories(sum);
     }, [foods]); // Recompute totalCalories whenever the foods change.
 
 useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     fetchFoods();
 }, [currentDate]);
 

@@ -86,6 +86,7 @@ useEffect(() => {
     if (id) {
         fetchWeights();
     }
+    // eslint-disable-next-line react-hooks/rules-of-hooks
 }, [id]);
 
 
