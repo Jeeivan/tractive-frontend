@@ -1,4 +1,4 @@
-# SEI Unit 2 Project ReadMe
+# SEI Unit 3 Project ReadMe
 
 ## Project Description
 
