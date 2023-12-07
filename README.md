@@ -4,6 +4,20 @@
 
 After 2 weeks of learning React at the General Assembly Software Engineering Immersive Course we were given our first group project to make a website with a MERN stack. The aim of our project was to create a website that allows a user to store and track their workouts and foods they have eaten as well as being able to set goals for their workout and calories they intake- primarily aimed at people who go to the gym/keeping healthy.
 
+## Table of Contents
+
+- [Deployment Link](#deployment-link)
+- [Timeframe & Working Team](#timeframe-and-working-team)
+- [Technologies Used](#technologies-used)
+- [Brief](#brief)
+- [Planning](#planning)
+- [Build Process](#build-process)
+- [Challenges](#challenges)
+- [Wins](#wins)
+- [Key Learnings/Takeaways](#key-learningstakeaways)
+- [Bugs](#bugs)
+- [Future Improvements](#future-improvements)
+
 ## Deployment Link
 
 Unfotunately having issues with deployment at this time.
