@@ -145,17 +145,61 @@ I successfully managed to display the information retrieved from the login on th
 **Day 2**
 
 - On this day I was having issues with being able to get the id of the user from mongoDB and fetch it from the front end
-- I was able to solve this by using the session that gave me the user email and then changing my back end to get a user by using the email, as shown below, rather than the id, which I was having a lot of trouble accessing through the database
+- I was able to solve this by using the session that gave me the user email and then changing my back end to get a user by using the email rather than the id, which I was having a lot of trouble accessing through the database
 
-[Insert Screenshot]
+```
+    useEffect(() => {
+        async function fetchUserData() {
+            try {
+                const response = await fetch(`http://localhost:3006/users/${session?.user?.email}`);
+                const data = await response.json();
+                setUserData(data);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        }
+
+        if (status === "authenticated") {
+            fetchUserData();
+        }
+    }, [status, session?.user?.email]);
+```
 
 - I was then struggling with how I could get this userData to be used in the NavBar but after some thinking I decided to take the same approach in the NavBar too and this allowed me to get the userData and this then allowed me to put the id of the user into the endpoints for each of the different pages
+
+```
+        <Link className="font-bold text-lg" href={"/"}>
+          Home
+        </Link>
+        {status === "authenticated" && userData && (
+          <Link
+            className="font-bold text-lg"
+            href={`/workouts/${userData._id}`}
+          >
+            Workout
+          </Link>
+        )}
+        {status === "authenticated" && userData && (
+          <Link
+            className="font-bold text-lg"
+            href={`/foods/${userData?._id}`}
+          >
+            Foods
+          </Link>
+        )}
+        {status === "authenticated" && userData && (
+          <Link
+            className="font-bold text-lg"
+            href={`/calendar/${userData?._id}`}
+          >
+            Weight Tracker
+          </Link>
+        )}
+```
+
 - This would then allow my colleagues to also use the id in their workout/food page by using the id from the URL that I added
 - I also added the data from Mongo onto the home page to display the profile of the user
 - I also added some styling and added more to the landing page to make it clear to anyone who visits the website for the first time what the website is about along with adding a google button that was imported through react to make it clear the login is only through google
-
-[Insert Screenshot]
-
 - I have been pleased with how my group have been working as a team and we make sure to start the day with a plan of what we are each going to do and then meet back once before lunch to discuss what we had done and git merge and do the same thing in the afternoon too
 
 **Day 3**
@@ -164,20 +208,42 @@ I successfully managed to display the information retrieved from the login on th
 - Getting the CRUD finished was fairly straightforward as I had already got the back end working for these from the first day and checked these with postman and so this meant I only needed to implement the endpoints from the backend into the front end
 - I also now created a new schema for calendar that is going to allow the user to input their weights along with the current date and allow them to track their progress towards their goal weight which I added to the userSchema
 
-[Insert Screenshot]
+```
+const calendarSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    },
+    weight: {
+        type: Number,
+        required: true
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    }
+})
+```
 
 - We decided as a group that we wanted the user to be able to track their progress towards their goal weight through the home screen so my next task for the day was to be able to grab all the information I needed onto the home page
 - Now that I had this information I just needed to add the progress bar with styling and some mathematics to work out the percentage of the progress as shown below
 - Working as a team has continued to go smoothly as we continue to keep each other up to date and when we have any blockers we make sure to come together to discuss and help each other out
-- 
-[Insert Screenshot]
+  
+```
+  const calculateProgress = () => {
+    if (userData.goalWeight && recentWeight && recentWeight.weight) {
+      const percentage = Math.round(((recentWeight.weight - userData.weight) / (userData.goalWeight - userData.weight)) * 100);
+      return Math.min(100, Math.max(0, percentage));
+    }
+    return 0;
+  };
+```
 
 **Day 4**
 
 Towards the final phase of the project, I implemented a design change to the progress bar, transforming it into a circle. This adjustment, in my view, enhanced the user-friendliness of the website.
 As a group, we diligently adhered to a routine of merging our files at least twice a day, finding this approach highly effective in keeping everyone in sync with the ongoing developments.
-
-[Insert Screenshot]
 
 Collectively, we are immensely pleased with the progression of our project. Recognizing the limited time remaining for the week, we made a strategic decision to leave the functionality as it is and shift our focus to the styling aspect. This collaborative effort ensures that we conclude the project on a high note, with a polished and visually appealing end result as shown.
 
@@ -185,18 +251,54 @@ Collectively, we are immensely pleased with the progression of our project. Reco
 
 - One blocker I was having is that despite the user being signed out it is continuing to show their data underneath the about section
 - I was able to fix this by adding a conditional statement so that the data would only render if the userData was present which it would not be once the user is signed out
-[Insert Screenshot]
+
+```
+  return (
+    <div>
+      <UserInfo />
+      <div className="mt-5 flex justify-center">
+        {userData.goalCalories && (
+```
+
 - I was having an issue where I wanted to make a progress bar for the total calories eaten that day compared to the calories goal for the day
 - I was trying to solve this using context to access the data from the food page however after a lot of difficulty using the context method I used a different approach where I created a new endpoint that would call all the food data submitted by the individual user for that day and sum the total calories from this as shown
 - I then called this fetch in my home page to grab the total calories for the user that is signed in and am pleased to get this working
-[Insert Screenshot]
+
+```
+app.get('/calories/total/:id', async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const date = new Date();
+    const startOfDay = new Date(date);
+    startOfDay.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date(date);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const foods = await Food.find({ user: userId, date: { $gte: startOfDay, $lte: endOfDay } });
+
+    const totalCalories = foods.reduce((total, food) => total + food.calories, 0);
+
+    res.json({ totalCalories });
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+```
 
 
 ## Wins
 
 I was happy with how I adjusted the progress bar to change colour depending on the percentage of the progress to make it more clear for the user on how their progress is coming along. I was able to implement this with the following code below.
 
-[Insert Screenshot]
+```
+  const getProgressBarColor = (percentage) => {
+    if (percentage < 25) return '#CA3F54'; // Red
+    if (percentage < 50) return '#FFAC81'; // Orange
+    if (percentage < 99) return '#3993DD'; // Blue
+    return '80FF00'; // Green
+  };
+```
 
 ## Key Learnings/Takeaways
 
