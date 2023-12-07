@@ -135,15 +135,12 @@ I initiated the project by developing the backend endpoints and schema for the u
 
 The most challenging aspect of the day centred around establishing a connection between Google Authentication and the frontend. Although initially daunting, I navigated through this hurdle with the aid of YouTube tutorials and independent research, eventually achieving a functional integration.
 
-Subsequently, I encountered difficulties linking this login functionality to saving data onto the MongoDB collection I had established. Leveraging the groundwork laid by the pre-existing backend, I crafted a callback mechanism to seamlessly transmit the login data to MongoDB, overcoming this particular challenge.
-
-[Insert Screenshot]
-
 Following that, I designed a straightforward page enabling users to enrich their profiles by providing additional information. Satisfied with its appearance, my focus shifted to the upcoming day's tasks, which involved establishing a connection between this page and the backend. Additionally, I worked on incorporating the user ID into the endpoint of the page.
 
 I successfully managed to display the information retrieved from the login on this page, enhancing the user experience. However, a notable challenge emerged as we navigated the process of pushing to Git and merging individual branches into the main repository. This marked our first experience with group projects, presenting unforeseen difficulties. Despite initial hurdles, persistent trial and error, along with thorough research, enabled us to achieve our first commits for both frontend and backend projects. Merging these into the main branch at the end of the working day was a significant accomplishment, and I felt particularly pleased considering the initial complexities of the task.
 
-[Insert Screenshot]
+![profile page](day1.png)
+![user proifle](user.png)
 
 **Day 2**
 
