@@ -1,5 +1,7 @@
 # SEI Unit 3 Project ReadMe
 
+![screenshot of website](example.png)
+
 ## Project Description
 
 After 2 weeks of learning React at the General Assembly Software Engineering Immersive Course we were given our first group project to make a website with a MERN stack. The aim of our project was to create a website that allows a user to store and track their workouts and foods they have eaten as well as being able to set goals for their workout and calories they intake- primarily aimed at people who go to the gym/keeping healthy.
@@ -121,7 +123,8 @@ Utilize an API for foods to enable users to input food and quantity, fetching ca
 
 **MongoDB:**
 Our database plan is straightforward, with each entity (nutrition, workout, calendar) referencing user IDs to ensure each user has personalized data for each entity.
-[Insert Screenshot]
+
+![screenshot of database structure](plan.png)
 
 
 ## Build Process
